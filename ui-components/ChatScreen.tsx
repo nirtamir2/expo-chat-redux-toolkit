@@ -1,6 +1,7 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Button, FlatList, StyleSheet, TextInput, View } from "react-native";
+import { useHeaderHeight } from "@react-navigation/stack";
 import { dimensions } from "../ui-core";
 import { selectChat, sendMessage } from "../store";
 import { IRootStackNavigationProps, Routes } from "../router";
@@ -10,11 +11,12 @@ interface IProps extends IRootStackNavigationProps<Routes.CHAT_SCREEN> {}
 
 export function ChatScreen(props: IProps) {
   const { route, navigation } = props;
-  const { chatId } = route.params;
 
+  const { chatId } = route.params;
+  const dispatch = useDispatch();
   const chat = useSelector(selectChat(chatId));
 
-  const dispatch = useDispatch();
+  const headerHeight = useHeaderHeight();
 
   const [message, setMessage] = React.useState("");
   const messagesListRef = React.useRef<FlatList | null>(null);
@@ -43,7 +45,12 @@ export function ChatScreen(props: IProps) {
   }
 
   return chat == null ? null : (
-    <View style={styles.chatScreen}>
+    <View
+      style={[
+        styles.chatScreen,
+        { height: dimensions.windowHeight - headerHeight },
+      ]}
+    >
       <View style={styles.chatListContainer}>
         <FlatList
           ref={messagesListRef}
@@ -82,13 +89,13 @@ export function ChatScreen(props: IProps) {
 
 const styles = StyleSheet.create({
   chatScreen: {
-    height: dimensions.windowHeightWithoutToolbar,
+    flex: 1,
   },
   chatListContainer: {
     flex: 1,
   },
   chatList: {
-    padding: dimensions.gutter,
+    paddingHorizontal: dimensions.gutter,
   },
   addMessage: {
     flexDirection: "row",
