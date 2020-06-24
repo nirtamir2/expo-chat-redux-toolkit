@@ -1,10 +1,8 @@
 import { configureStore, getDefaultMiddleware } from "@reduxjs/toolkit";
-import { appSlice } from "./appSlice";
-
-const middleware = [...getDefaultMiddleware()];
+import { chatSliceReducer } from "./chatSlice";
 
 export const store = configureStore({
-  reducer: appSlice.reducer,
-  devTools: true,
-  middleware
+  reducer: chatSliceReducer,
+  devTools: __DEV__,
+  middleware: getDefaultMiddleware(),
 });

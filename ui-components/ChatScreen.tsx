@@ -1,53 +1,72 @@
 import React from "react";
-import {useDispatch, useSelector} from "react-redux";
-import {
-  Button,
-  FlatList,
-  StyleSheet,
-  Text,
-  TextInput,
-  View
-} from "react-native";
-import { dimensions } from "../dimensions";
-import {appSlice, createSendMessage, selectChat, selectChats, sendMessage} from "../store/appSlice";
-import { IRootStackNavigationProps } from "../IRootStackNavigationProps";
-import { Routes } from "../Routes";
-import {Message} from "./Message";
-import {store} from "../store/store";
+import { useDispatch, useSelector } from "react-redux";
+import { Button, FlatList, StyleSheet, TextInput, View } from "react-native";
+import { dimensions } from "../ui-core";
+import { selectChat, sendMessage } from "../store";
+import { IRootStackNavigationProps, Routes } from "../router";
+import { Message } from "./Message";
 
 interface IProps extends IRootStackNavigationProps<Routes.CHAT_SCREEN> {}
 
 export function ChatScreen(props: IProps) {
-  const { route } = props;
-  // NOTE: Laziness selector with parameter
-  const chats = useSelector(selectChats);
+  const { route, navigation } = props;
+  const { chatId } = route.params;
+
+  const chat = useSelector(selectChat(chatId));
+
   const dispatch = useDispatch();
-  const {chatId} = route.params;
-  const chat = chats.find(c => c.id === chatId)?.messages;
+
   const [message, setMessage] = React.useState("");
+  const messagesListRef = React.useRef<FlatList | null>(null);
+
+  React.useEffect(() => {
+    if (chat != null) {
+      navigation.setOptions({ title: chat.contact.name });
+    }
+  }, [chat]);
 
   function handleChangeMessage(message: string) {
     setMessage(message);
   }
 
   function handleSandMessage() {
-    const sendMessageAction = createSendMessage({message, chatId});
-    console.log(sendMessageAction);
-   dispatch(sendMessageAction)
-    setMessage("")
+    if (message.length === 0) return;
+    dispatch(sendMessage({ message, chatId }));
+    setMessage("");
   }
 
-  return (chat == null ? null :
+  function scrollToListEnd() {
+    const messagesList = messagesListRef.current;
+    if (messagesList != null) {
+      messagesList.scrollToEnd();
+    }
+  }
+
+  return chat == null ? null : (
     <View style={styles.chatScreen}>
-      <FlatList
-        style={styles.chatList}
-        data={chat}
-        renderItem={({item}) => {
-          return <View style={{flex: 1, flexDirection: 'row',justifyContent: item.isIncoming ? "flex-start" : "flex-end"}}>
-          <Message message={item.content} incoming={item.isIncoming}/>
-          </View>
-        }}
-      />
+      <View style={styles.chatListContainer}>
+        <FlatList
+          ref={messagesListRef}
+          style={styles.chatList}
+          data={chat.messages}
+          onContentSizeChange={() => scrollToListEnd()}
+          keyExtractor={(c) => c.id}
+          renderItem={({ item }) => {
+            return (
+              <View
+                style={[
+                  styles.chatItem,
+                  item.isIncoming
+                    ? styles.chatItemIncoming
+                    : styles.chatItemOutgoing,
+                ]}
+              >
+                <Message message={item.content} incoming={item.isIncoming} />
+              </View>
+            );
+          }}
+        />
+      </View>
       <View style={styles.addMessage}>
         <TextInput
           multiline
@@ -63,17 +82,31 @@ export function ChatScreen(props: IProps) {
 
 const styles = StyleSheet.create({
   chatScreen: {
+    height: dimensions.windowHeightWithoutToolbar,
+  },
+  chatListContainer: {
     flex: 1,
   },
-  chatList:{
+  chatList: {
     padding: dimensions.gutter,
   },
   addMessage: {
-    flexDirection: "row"
+    flexDirection: "row",
   },
   input: {
     borderWidth: dimensions.borderWidth,
     paddingHorizontal: dimensions.gutter,
-    flex: 1
-  }
+    flex: 1,
+  },
+  chatItem: {
+    paddingBottom: dimensions.gutterSmall,
+    flexDirection: "row",
+    flex: 1,
+  },
+  chatItemIncoming: {
+    justifyContent: "flex-start",
+  },
+  chatItemOutgoing: {
+    justifyContent: "flex-end",
+  },
 });

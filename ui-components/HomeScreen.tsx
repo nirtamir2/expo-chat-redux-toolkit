@@ -1,15 +1,8 @@
 import React from "react";
-import {
-  StyleSheet,
-  View,
-  Text,
-  FlatList,
-  TouchableOpacity
-} from "react-native";
-import { Routes } from "../Routes";
-import { IRootStackNavigationProps } from "../IRootStackNavigationProps";
+import { FlatList, StyleSheet, TouchableOpacity, View } from "react-native";
 import { useSelector } from "react-redux";
-import { selectChats } from "../store/appSlice";
+import { Routes, IRootStackNavigationProps } from "../router";
+import { selectChats } from "../store";
 import { ChatItem } from "./ChatItem";
 
 interface IProps extends IRootStackNavigationProps<Routes.HOME_SCREEN> {}
@@ -24,6 +17,7 @@ export function HomeScreen(props: IProps) {
   return (
     <View style={styles.homeScreen}>
       <FlatList
+        keyExtractor={(c) => c.id}
         data={chats}
         renderItem={({ item }) => {
           const { id, contact, messages } = item;
@@ -44,5 +38,5 @@ export function HomeScreen(props: IProps) {
 }
 
 const styles = StyleSheet.create({
-  homeScreen: {}
+  homeScreen: {},
 });

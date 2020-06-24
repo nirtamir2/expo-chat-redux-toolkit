@@ -1,6 +1,6 @@
 import React from "react";
 import { StyleSheet, View, Text, Image } from "react-native";
-import { dimensions } from "../dimensions";
+import { dimensions } from "../ui-core";
 
 interface IProps {
   message: string;
@@ -17,7 +17,7 @@ export function ChatItem(props: IProps) {
       <Image style={styles.avatar} source={{ uri: avatarUrl }} />
       <View>
         <Text style={styles.contactName}>{contactName}</Text>
-        <Text>{message}</Text>
+        <Text numberOfLines={1}>{message}</Text>
       </View>
     </View>
   );
@@ -26,16 +26,16 @@ export function ChatItem(props: IProps) {
 const styles = StyleSheet.create({
   chatItem: {
     padding: dimensions.gutter,
-    flexDirection: "row"
+    flexDirection: "row",
   },
   contactName: {
     fontSize: dimensions.fontSize,
-    fontWeight: dimensions.fontWeightBold
+    fontWeight: dimensions.fontWeightBold,
   },
   avatar: {
-    padding: dimensions.gutter,
+    marginEnd: dimensions.gutter,
     height: AVATAR_SIZE,
     width: AVATAR_SIZE,
-    borderRadius: dimensions.borderRadiusRound
-  }
+    borderRadius: dimensions.borderRadiusRound,
+  },
 });

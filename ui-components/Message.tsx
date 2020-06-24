@@ -1,7 +1,6 @@
 import React from "react";
-import { StyleSheet, View, Image, Text } from "react-native";
-import { dimensions } from "../dimensions";
-import { colors } from "../colors";
+import { StyleSheet, Text, View } from "react-native";
+import { colors, dimensions } from "../ui-core";
 
 interface IProps {
   incoming?: boolean;
@@ -17,7 +16,7 @@ export function Message(props: IProps) {
           styles.messageContent,
           incoming
             ? styles.messageContentIncoming
-            : styles.messageContentOutgoing
+            : styles.messageContentOutgoing,
         ]}
       >
         {message}
@@ -28,18 +27,19 @@ export function Message(props: IProps) {
 
 const styles = StyleSheet.create({
   message: {
-    borderRadius: dimensions.borderRadius
+    borderRadius: dimensions.borderRadius,
   },
   messageContent: {
+    paddingVertical: dimensions.gutterSmall,
+    paddingHorizontal: dimensions.gutter,
     borderRadius: dimensions.borderRadius,
-    padding: dimensions.gutter
   },
   messageContentIncoming: {
     backgroundColor: colors.primary,
-    color: colors.textPrimary
+    color: colors.textPrimary,
   },
   messageContentOutgoing: {
     backgroundColor: colors.secondary,
-    color: colors.textSecondary
-  }
+    color: colors.textSecondary,
+  },
 });

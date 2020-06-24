@@ -8,15 +8,76 @@
         "avatarUrl": "https://via.placeholder.com/150"
       },
       "messages": [
-        { "isIncoming": true, "content": "HI Nir", "timestamp": 1593001085923 },
-        { "isIncoming": false, "content": "HI 2", "timestamp": 1593001086923 },
         {
+          "id": "a",
+          "isIncoming": true,
+          "content": "HI Nir",
+          "timestamp": 1593001085923
+        },
+        {
+          "id": "b",
+          "isIncoming": false,
+          "content": "HI 2",
+          "timestamp": 1593001086923
+        },
+        {
+          "id": "c",
+          "isIncoming": false,
+          "content": "HI 3 How Are you \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n Cool \n \n \n \n \n \n \n  cool",
+          "timestamp": 1593001087000
+        },
+        {
+          "id": "d",
+          "isIncoming": false,
+          "content": "HI 4 ",
+          "timestamp": 1593001088923
+        },
+        {
+          "id": "e",
+          "isIncoming": true,
+          "content": "HI 5 ",
+          "timestamp": 1593001089923
+        }
+      ]
+    },
+    {
+      "id": "B",
+      "contact": {
+        "id": "SADS",
+        "name": "Nir Tamir",
+        "avatarUrl": "https://via.placeholder.com/150"
+      },
+      "messages": [
+        {
+          "id": "aa",
+          "isIncoming": true,
+          "content": "HI Nir",
+          "timestamp": 1593001085923
+        },
+        {
+          "id": "ab",
+          "isIncoming": false,
+          "content": "HI 2",
+          "timestamp": 1593001086923
+        },
+        {
+          "id": "ac",
           "isIncoming": false,
           "content": "HI 3 How Are you",
           "timestamp": 1593001087000
         },
-        { "isIncoming": false, "content": "HI 4 ", "timestamp": 1593001088923 },
-        { "isIncoming": true, "content": "HI 5 ", "timestamp": 1593001089923 }
+        {
+          "id": "ad",
+          "isIncoming": false,
+          "content": "HI 4 ",
+          "timestamp": 1593001088923
+        },
+        {
+          "id": "ae",
+          "isIncoming": true,
+          "content": "HI 5 ",
+          "timestamp": 1593001089923
+        }
       ]
     }
   ]
