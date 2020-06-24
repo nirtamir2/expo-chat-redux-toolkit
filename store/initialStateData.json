@@ -1,0 +1,23 @@
+{
+  "chats": [
+    {
+      "id": "A",
+      "contact": {
+        "id": "SADS",
+        "name": "Nir",
+        "avatarUrl": "https://via.placeholder.com/150"
+      },
+      "messages": [
+        { "isIncoming": true, "content": "HI Nir", "timestamp": 1593001085923 },
+        { "isIncoming": false, "content": "HI 2", "timestamp": 1593001086923 },
+        {
+          "isIncoming": false,
+          "content": "HI 3 How Are you",
+          "timestamp": 1593001087000
+        },
+        { "isIncoming": false, "content": "HI 4 ", "timestamp": 1593001088923 },
+        { "isIncoming": true, "content": "HI 5 ", "timestamp": 1593001089923 }
+      ]
+    }
+  ]
+}
