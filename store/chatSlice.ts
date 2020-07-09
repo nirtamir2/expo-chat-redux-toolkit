@@ -8,8 +8,11 @@ interface IState {
 }
 
 interface ISendMessageParams {
-  message: string;
+  id: string;
   chatId: string;
+  isIncoming: boolean;
+  message: string;
+  timestamp: number;
 }
 
 const initialState: IState = {
@@ -21,14 +24,13 @@ const chatSlice = createSlice({
   initialState: initialState,
   reducers: {
     sendMessage: (state: IState, action: PayloadAction<ISendMessageParams>) => {
-      const { message, chatId } = action.payload;
+      const { message, chatId, isIncoming, id, timestamp } = action.payload;
       const chat = state.chats.find((c) => c.id === chatId);
       if (chat != null) {
-        const isIncoming = Math.random() > 0.5;
         const newMessage = {
-          id: `chat-message-id_${Math.random()}`,
-          isIncoming: isIncoming,
-          timestamp: Date.now(),
+          id,
+          isIncoming,
+          timestamp,
           content: message,
         };
         chat.messages = [...chat.messages, newMessage];

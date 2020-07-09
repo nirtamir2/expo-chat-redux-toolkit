@@ -33,7 +33,15 @@ export function ChatScreen(props: IProps) {
 
   function handleSandMessage() {
     if (message.length === 0) return;
-    dispatch(sendMessage({ message, chatId }));
+    dispatch(
+      sendMessage({
+        id: `chat-message-id_${Math.random()}`,
+        chatId,
+        message,
+        isIncoming: Math.random() > 0.5,
+        timestamp: Date.now(),
+      })
+    );
     setMessage("");
   }
 
